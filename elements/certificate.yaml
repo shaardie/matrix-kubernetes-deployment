@@ -1,0 +1,23 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: elements
+spec:
+  commonName: matrix.example.com
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: selfsigned
+  privateKey:
+    algorithm: RSA
+    rotationPolicy: Always
+    size: 4096
+  secretName: elements-certificate
+  subject:
+    countries:
+    - DE
+    localities:
+    - Osnabrück
+    provinces:
+    - Niedersachsen
