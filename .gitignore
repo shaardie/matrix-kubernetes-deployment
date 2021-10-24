@@ -1,0 +1,6 @@
+.vagrant/
+Vagrantfile
+
+worker/
+main/
+config/
