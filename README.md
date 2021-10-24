@@ -4,6 +4,10 @@ This repository contains the necessary files to setup Matrix on Kubernetes.
 
 There are severeal things missing for production-ready usage, like proper passwords, mtls encryption, resource limits and high avaiable databases, but it is a good starting point.
 
+## Useful Links
+
+* https://github.com/matrix-org/synapse/blob/develop/docs/workers.md
+
 ## Example Usage
 
 ```bash
@@ -77,4 +81,7 @@ kubectl -n matrix create secret generic worker --from-file worker
 
 # Install Synapse
 kubectl -n matrix apply -f synapse
+
+# Register new user
+kubectl -n matrix exec -it "$(kubectl -n matrix get pods --no-headers -o custom-columns=":metadata.name" -l app.kubernetes.io/instance=matrix,app.kubernetes.io/name=synapse-main)" -c synapse -- register_new_matrix_user -c /config/homeserver.yaml http://synapse-main:80
 ```
