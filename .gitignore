@@ -4,3 +4,4 @@ Vagrantfile
 worker/
 main/
 config/
+synapse/generated-secrets.yaml

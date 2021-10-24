@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: synapse-main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: synapse-main
+      app.kubernetes.io/instance: matrix
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: synapse-main
+        app.kubernetes.io/instance: matrix
+      annotations:
+        config: new
+    spec:
+      initContainers:
+        - name: permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 991:991 /data"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      containers:
+        - name: synapse
+          image: "matrixdotorg/synapse:v1.44.0"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SYNAPSE_CONFIG_PATH
+              value: "/config"
+          ports:
+            - name: http
+              containerPort: 8008
+              protocol: TCP
+            - name: replication
+              containerPort: 9093
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config
+          secret:
+            secretName: main
+        - name: data
+          persistentVolumeClaim:
+            claimName: synapse
+  

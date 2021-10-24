@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: synapse-worker
+data:
+  worker.yaml: |
+      worker_app: synapse.app.generic_worker
+      worker_name: WORKER_NAME
+      worker_replication_host: synapse-main
+      worker_replication_http_port: 9093
+
+      worker_listeners:
+      - type: http
+        port: 8083
+        resources:
+          - names:
+            - client
+            - federation
+
+      worker_log_config: /config/matrix.haardiek.org.log.config
