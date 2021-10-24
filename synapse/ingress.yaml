@@ -1,0 +1,431 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: synapse-main
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  tls:
+    - hosts:
+        - matrix.haardiek.org
+      secretName: synapse-certificate
+
+  rules:
+    - host: matrix.haardiek.org
+      http:
+        paths:
+        - pathType: Prefix
+          path: /
+          backend:
+            service:
+              name: synapse-main
+              port:
+                number: 80
+        - path: "/_matrix/client/(v2_alpha|r0)/sync"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|v2_alpha|r0)/events"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0)/initialSync"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0)/rooms/[^/]+/initialSync"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/event/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/state/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/state_ids/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/backfill/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/get_missing_events/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/publicRooms"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/query/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/make_join/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/make_leave/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/send_join/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v2/send_join/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/send_leave/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v2/send_leave/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/invite/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v2/invite/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/query_auth/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/event_auth/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/exchange_third_party_invite/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/user/devices/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/get_groups_publicised"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/key/v2/query"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/unstable/org.matrix.msc2946/spaces/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/unstable/org.matrix.msc2946/hierarchy/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/federation/v1/send/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/createRoom"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/publicRooms"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/rooms/.*/joined_members"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/rooms/.*/context/.*"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/rooms/.*/members"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/rooms/.*/state"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/unstable/org.matrix.msc2946/rooms/.*/spaces"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/unstable/org.matrix.msc2946/rooms/.*/hierarchy"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/unstable/im.nheko.summary/rooms/.*/summary"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/account/3pid"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/devices"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/keys/query"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/keys/changes"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/versions"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/voip/turnServer"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/joined_groups"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/publicised_groups"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/publicised_groups/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/rooms/.*/event/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/joined_rooms"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/search"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/login"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(r0|unstable)/register"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/unstable/org.matrix.msc3231/register/org.matrix.msc3231.login.registration_token/validity"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/rooms/.*/redact"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/rooms/.*/send"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/rooms/.*/state/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/rooms/.*/(join|invite|leave|ban|unban|kick)"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/join/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80
+        - path: "/_matrix/client/(api/v1|r0|unstable)/profile/"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: synapse-worker
+              port:
+                number: 80

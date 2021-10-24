@@ -78,12 +78,8 @@ docker run -it --rm \
     -v "$PWD/config:/config" \
     matrixdotorg/synapse:latest \
     generate
-cp -rv config main
-cp -rv config worker
-patch -p0 < main.patch
-patch -p0 < worker.patch
-kubectl -n matrix create secret generic main --from-file main
-kubectl -n matrix create secret generic worker --from-file worker
+patch -p0 config/homeserver.yaml < homerserver.patch
+kubectl -n matrix create secret generic main --from-file config -o yaml --dry-run=client >> synapse/generated-secrets.yaml
 
 # Install Synapse
 kubectl -n matrix apply -f synapse

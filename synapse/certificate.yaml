@@ -1,0 +1,25 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: synapse
+spec:
+  commonName: matrix.haardiek.org
+  dnsNames:
+    - matrix.haardiek.org
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+  privateKey:
+    algorithm: RSA
+    rotationPolicy: Always
+    size: 4096
+  secretName: synapse-certificate
+  subject:
+    countries:
+    - DE
+    localities:
+    - Osnabrück
+    provinces:
+    - Niedersachsen

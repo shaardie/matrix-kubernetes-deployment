@@ -1,0 +1,34 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: synapse-main
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 9093
+      targetPort: replication
+      protocol: TCP
+      name: replication
+  selector:
+    app.kubernetes.io/name: synapse-main
+    app.kubernetes.io/instance: matrix
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: synapse-worker
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: synapse-worker
+    app.kubernetes.io/instance: matrix
