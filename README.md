@@ -40,8 +40,14 @@ microk8s config
 ########################################
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
+# https://github.com/jetstack/cert-manager
 helm upgrade --install --namespace cert-manager --create-namespace -f cert-manager/cert-manager.yaml cert-manager jetstack/cert-manager
-kubectl apply -f cert-manager/selfsigned.yaml
+kubectl apply -f cert-manager/letsencrypt.yaml
+
+#############################
+# Namespace
+#############################
+kubectl create namespace matrix
 
 #############################
 # Install minimal Databases #
