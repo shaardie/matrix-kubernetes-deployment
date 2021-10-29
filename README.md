@@ -69,7 +69,7 @@ kubectl -n matrix apply -f element
 # Generate Synapse config
 mkdir config
 docker run -it --rm \
-    -e SYNAPSE_SERVER_NAME=matrix.example.de \
+    -e SYNAPSE_SERVER_NAME=matrix.haardiek.org \
     -e SYNAPSE_CONFIG_DIR=/config \
     -e SYNAPSE_DATA_DIR=/data \
     -e SYNAPSE_REPORT_STATS=no \

@@ -21,7 +21,7 @@ spec:
       initContainers:
         - name: worker-name
           image: "busybox:1.34.1"
-          command: ["sh", "-c", "set -x; sed s/WORKER_NAME/$WORKER_NAME/g /worker-template/worker.yaml > worker/worker.yaml"]
+          command: ["sh", "-c", "sed s/WORKER_NAME/$WORKER_NAME/g /worker-template/worker.yaml | tee worker/worker.yaml"]
           env:
             - name: WORKER_NAME
               valueFrom:

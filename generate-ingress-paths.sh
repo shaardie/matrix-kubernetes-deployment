@@ -83,14 +83,3 @@ for line in $(grep -vE "^#|^$" <<<"
       port:
         number: 80"
 done
-
-
-# while read -r line; do
-#     echo "- path: \"${line:1:${#line}-2}\"
-#   pathType: ImplementationSpecific
-#   backend:
-#     service:
-#       name: synapse-worker
-#       port:
-#         number: 80"
-# done < 
