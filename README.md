@@ -63,8 +63,8 @@ kubectl -n matrix apply -f redis
 # Install Matrix #
 ##################
 
-# Install elements
-kubectl -n matrix apply -f elements
+# Install element
+kubectl -n matrix apply -f element
 
 # Generate Synapse config
 mkdir config

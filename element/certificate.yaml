@@ -2,7 +2,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: elements
+  name: element
 spec:
   commonName: chat.haardiek.org
   dnsNames:
@@ -15,7 +15,7 @@ spec:
     algorithm: RSA
     rotationPolicy: Always
     size: 4096
-  secretName: elements-certificate
+  secretName: element-certificate
   subject:
     countries:
     - DE
