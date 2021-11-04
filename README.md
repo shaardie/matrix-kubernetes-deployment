@@ -7,6 +7,8 @@ There are severeal things missing for production-ready usage, like proper passwo
 ## Useful Links
 
 * https://microk8s.io/docs
+* https://github.com/jetstack/cert-manager
+* https://cert-manager.io/docs/
 * https://hub.docker.com/_/postgres
 * https://github.com/matrix-org/synapse/blob/develop/docs/postgres.md
 * https://hub.docker.com/_/redis
@@ -46,7 +48,6 @@ microk8s config
 ########################################
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
-# https://github.com/jetstack/cert-manager
 helm upgrade --install --namespace cert-manager --create-namespace -f cert-manager/cert-manager.yaml cert-manager jetstack/cert-manager
 kubectl apply -f cert-manager/letsencrypt.yaml
 
