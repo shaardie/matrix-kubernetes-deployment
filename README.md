@@ -6,6 +6,12 @@ There are severeal things missing for production-ready usage, like proper passwo
 
 ## Useful Links
 
+* https://microk8s.io/docs
+* https://hub.docker.com/_/postgres
+* https://github.com/matrix-org/synapse/blob/develop/docs/postgres.md
+* https://hub.docker.com/_/redis
+* https://hub.docker.com/r/vectorim/element-web
+* https://hub.docker.com/r/matrixdotorg/synapse
 * https://github.com/matrix-org/synapse/blob/develop/docs/workers.md
 
 ## Example Usage
